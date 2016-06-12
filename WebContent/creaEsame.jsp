@@ -60,7 +60,7 @@ table {
 				<p>Tipologia esame:</p>
 				<c:forEach var="tipologiaEsame" items="${tipologieEsame}">
 					<p>
-						<input type="checkbox" name="tipologiaEsame" value="${tipologiaEsame.nome}"> ${tipologiaEsame.nome}
+						<input type="radio" name="tipologiaEsame" value="${tipologiaEsame.nome}"> ${tipologiaEsame.nome}
 					</p>
 				</c:forEach>
 				<p>Codice fiscale del paziente:</p>

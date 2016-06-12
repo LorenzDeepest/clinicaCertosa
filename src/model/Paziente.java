@@ -22,7 +22,6 @@ import javax.persistence.TemporalType;
 @NamedQueries({
 @NamedQuery(name = "Paziente.findByMail", query = "select distinct c from paziente c where c.email = :mail"),
 @NamedQuery(name = "Paziente.findByCodiceFiscale", query = "select distinct c from paziente c where c.codiceFiscale = :codiceFiscale")
-
 })
 	
 public class Paziente{
@@ -105,12 +104,6 @@ public class Paziente{
 		this.dataDiNascita = dataDiNascita;
 	}
 
-
-
-
-
-
-
 	//utility
 	public void addEsame(Esame esame) {
 		this.esami.add(esame);
@@ -191,14 +184,4 @@ public class Paziente{
 		return "Paziente [nome=" + nome + ", cognome=" + cognome + ", id=" + id + ", email=" + email
 				+ ", codiceFiscale=" + codiceFiscale + ", dataDiNascita=" + dataDiNascita + ", esami=" + esami + "]";
 	}
-
-
-
-
-
-
-
-
-
-
 }

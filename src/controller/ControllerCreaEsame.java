@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Medico;
-import model.Paziente;
 import model.TipologiaEsame;
-import persistence.MedicoDao;
+
+
 
 /**
  * Servlet implementation class Controller

@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.validator.routines.DateValidator;
@@ -19,6 +18,7 @@ import model.Medico;
 import model.Paziente;
 import model.TipologiaEsame;
 import persistence.AmministratoreDao;
+import persistence.EsameDao;
 import persistence.MedicoDao;
 import persistence.PazienteDao;
 import persistence.TipologiaEsameDao;
@@ -123,11 +123,9 @@ public class Helper {
 	public String creaEsame(EntityManager em,HttpServletRequest request) {
 		PazienteDao pazienteDao = new PazienteDao(em);
 		MedicoDao medicoDao = new MedicoDao(em);
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
+		
 		Paziente paziente = pazienteDao.findByCodiceFiscale(request.getParameter("paziente"));
 		Medico medico = medicoDao.findByCodiceFiscale(request.getParameter("medico"));
-		tx.commit();
 		
 
 		if(medico==null){
@@ -146,12 +144,9 @@ public class Helper {
 		paziente.addEsame(nuovoEsame);
 		medico.addEsameEffettuato(nuovoEsame);//effettuare questo dopo che l'esame è stato effettuato?
 
-		tx = em.getTransaction();
-		tx.begin();
+		new EsameDao(em).save(nuovoEsame);
 		pazienteDao.update(paziente);
-		medicoDao.update(medico);
-		tx.commit();
-		if(request.getParameter("finito").equals("finito"))
+		if(request.getParameter("finito") != null)
 			return "/paginaAmministrazione.jsp";
 		return "/creaEsame.jsp";
 	}
@@ -165,7 +160,7 @@ public class Helper {
 		int ora = new Integer(orario.substring(0, 2));
 		int minuto = new Integer(orario.substring(3,5));
 		Calendar cal = Calendar.getInstance();
-		cal.set(anno, mese, giorno, ora, minuto, 0);
+		cal.set(anno, mese-1, giorno, ora, minuto, 0);
 		return cal.getTime();
 
 	}
