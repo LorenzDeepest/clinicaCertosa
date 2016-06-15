@@ -69,6 +69,13 @@ public class Facade {
 		// TODO Auto-generated method stub
 		return new Helper().aquisisciMedicoCF(entityManager, parameter);
 	}
+	public void creaNuovaTipologia(HttpServletRequest request){
+		new Helper().creaNuovaTipologia(request,entityManager);
+	}
+	public void inserisciRisultatiEsame(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		new Helper().inserisciRisultatiEsame(entityManager,request);
+	}
 
 
 }

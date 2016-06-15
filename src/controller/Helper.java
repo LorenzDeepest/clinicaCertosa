@@ -14,13 +14,18 @@ import org.apache.commons.validator.routines.DateValidator;
 
 import model.Amministratore;
 import model.Esame;
+import model.Indicatore;
 import model.Medico;
 import model.Paziente;
+import model.Prerequisito;
+import model.Risultato;
 import model.TipologiaEsame;
 import persistence.AmministratoreDao;
 import persistence.EsameDao;
+import persistence.IndicatoreDao;
 import persistence.MedicoDao;
 import persistence.PazienteDao;
+import persistence.PrerequisitoDao;
 import persistence.TipologiaEsameDao;
 
 public class Helper {
@@ -123,10 +128,10 @@ public class Helper {
 	public String creaEsame(EntityManager em,HttpServletRequest request) {
 		PazienteDao pazienteDao = new PazienteDao(em);
 		MedicoDao medicoDao = new MedicoDao(em);
-		
+
 		Paziente paziente = pazienteDao.findByCodiceFiscale(request.getParameter("paziente"));
 		Medico medico = medicoDao.findByCodiceFiscale(request.getParameter("medico"));
-		
+
 
 		if(medico==null){
 			request.setAttribute("erroreMedico","il codice fiscale inserito non è associato a nessun medico della clinica.");
@@ -191,9 +196,9 @@ public class Helper {
 	public List<Medico> aquisisciListMedici(EntityManager entityManager) {
 		return new ArrayList<>(new MedicoDao(entityManager).findAll());
 	}
-	
+
 	public boolean validateRegistrazione(HttpServletRequest request) {
-		
+
 		String nome,cognome,dataDiNascita, codiceFiscale,password, mail;
 		boolean corretto = true;
 		nome = request.getParameter("nome");
@@ -202,7 +207,7 @@ public class Helper {
 		codiceFiscale = request.getParameter("codiceFiscale");
 		password = request.getParameter("password");
 		mail = request.getParameter("mail");
-		
+
 		if(nome.equals("")){
 			corretto = false;
 			request.setAttribute("nomeError","nome: campo obligatorio");		
@@ -210,13 +215,13 @@ public class Helper {
 		if(cognome.equals("")){
 			corretto = false;
 			request.setAttribute("cognomeError","cognome: campo obligatorio");
-			
+
 		}
 		if(codiceFiscale.equals("")){
 			corretto = false;
 			request.setAttribute("codiceFiscaleError","codiceFiscale: campo obligatorio");			
 		}
-		
+
 		if(dataDiNascita.equals("")){
 			corretto = false;
 			request.setAttribute("dataDiNascitaError","dataDiNascita: campo obligatorio");						
@@ -226,7 +231,7 @@ public class Helper {
 			corretto = false;
 			request.setAttribute("dataDiNascitaError","dataDiNascita non valida");
 		}
-		
+
 		if(password.equals("")){
 			corretto = false;
 			request.setAttribute("passwordError","password: campo obligatorio");			
@@ -237,13 +242,13 @@ public class Helper {
 			corretto = false;
 			request.setAttribute("passwordError","password: non valida");
 		}
-		
-		
+
+
 		if(!request.getParameter("password2").equals(password)){
 			corretto = false;
 			request.setAttribute("passwordError","le password non coincidono");		
 		}
-		
+
 		if(mail.equals("")){
 			corretto = false;
 			request.setAttribute("mailError","mail: campo obligatorio");			
@@ -258,7 +263,7 @@ public class Helper {
 			corretto = false;
 			request.setAttribute("mailError","mail: utente già registrato");
 		}
-	
+
 		if(!request.getParameter("mail2").equals(mail)){
 			corretto = false;
 			request.setAttribute("mailError","le mail non coincidono");			
@@ -268,7 +273,7 @@ public class Helper {
 
 	public void registra(HttpServletRequest request, EntityManager em) {
 		Paziente paziente = new Paziente();
-		
+
 		paziente.setCognome(request.getParameter("cognome"));
 		paziente.setNome(request.getParameter("nome"));
 		paziente.setDataDiNascita(new DateValidator().validate(request.getParameter("dataDiNascita")));	
@@ -277,15 +282,48 @@ public class Helper {
 		paziente.setPassword(request.getParameter("password"));
 		new PazienteDao(em).save(paziente);
 		request.getSession().setAttribute("utente", paziente);
-		
-		}
+
+	}
 
 	public Medico aquisisciMedicoCF(EntityManager entityManager, String parameter) {
-			MedicoDao medicoDao = new MedicoDao(entityManager);
-			return medicoDao.findByCodiceFiscale(parameter);
+		MedicoDao medicoDao = new MedicoDao(entityManager);
+		return medicoDao.findByCodiceFiscale(parameter);
 
+	}
+
+	public void creaNuovaTipologia(HttpServletRequest request, EntityManager entityManager) {
+		String nome = request.getParameter("nome");
+		String desc = request.getParameter("descrizione");
+		float costo =  new Float(request.getParameter("costo"));
+
+		TipologiaEsame nuovaTipologiaEsame = new TipologiaEsame(nome, desc, costo);
+		List<Prerequisito> prerequisiti = new ArrayList<>(new PrerequisitoDao(entityManager).findAll()); 
+		List<Indicatore> indicatori = new ArrayList<>(new IndicatoreDao(entityManager).findAll()); 
+
+
+		for(int i=1;i<prerequisiti.size() || i < indicatori.size();i++){
+			String d = new Integer(i).toString();
+			if(i<indicatori.size())
+				if(request.getParameter("indicatore"+d)!= null)
+					nuovaTipologiaEsame.addIndicatore(new IndicatoreDao(entityManager).findById(new Long(request.getParameter("indicatore"+d))));
+			if(i<prerequisiti.size())
+				if(request.getParameter("prerequisito"+d)!= null)
+					nuovaTipologiaEsame.addPrerequisito(new PrerequisitoDao(entityManager).findById(new Long(request.getParameter("prerequisiti"+d))));
 		}
-	
+		new TipologiaEsameDao(entityManager).save(nuovaTipologiaEsame);
+	}
+
+	public void inserisciRisultatiEsame(EntityManager entityManager, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		Esame esameCorrente = new EsameDao(entityManager).findById(new Long(request.getParameter("esameCorrente")));
+		for(int i=1;i < esameCorrente.getTipologiaEsame().getIndicatori().size();i++){
+			String d = new Integer(i).toString();
+				if(request.getParameter("risultato"+d)!= null)
+					esameCorrente.addRisultato(new Risultato(request.getParameter("risultato"+d), request.getParameter("descrizione"+d)));
+		}
+		new EsameDao(entityManager).update(esameCorrente);
+	}
+
 
 
 }
