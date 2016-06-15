@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity(name="esame")
@@ -25,8 +27,9 @@ public class Esame {
 	private long id;
 	
 	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataPrenotazione;
-	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date dataEsame;
 	
