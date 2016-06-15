@@ -1,0 +1,83 @@
+Caso d'uso UC1: consulta offerta
+– Attore primario: utente non registrato
+– Scenario principale di successo:
+• L'utente clicca sull bottone 'esami che svolgiamo e viene rindirizzato in
+una pagina dove il sistema mostra l'elenco delle tipologie di esame attualmente offerte dalla clinica, con una breve
+descrizione e il costo del esame.
+• L'utente clicca su un esame e il sistema mostra tutti i dettagli di quel esame: indicatori e prerequisiti del
+esame scelto dall'utente
+• L'utente ripete i passi precedenti un numero
+indefinito di volteSpecifi
+
+Caso d'uso UC2: crea esame
+(prenotazione)
+– Attore primario: amministrazione
+– Scenario principale di successo:
+• L'ammistrazione crea un esame inserendo in un form i vari campi
+• L'amministrazione imposta una tipologia di esame all'esame creato
+• L'amministrazione associa un paziente all'esame creato
+• Il sistema registra l'esame (impostando automaticamente la data di prenotazione)
+– Precondizioni: l'amministratore è identificato e autenticato
+
+Caso d'uso UC3: consulta risultati proprio
+esame
+– Attore primario: paziente
+– Scenario principale:
+
+• il paziente effettua il log-in
+• il paziente spinge il bottone esami e il sistema mostra l'elenco degli esami sostenuti dal pazinete
+• il paziente chiede clicca su un esame e il sistema mostra i risultati del esame cliccato
+• ilpaziente ripete i passi precedenti finché necessario
+– Precondizioni: il paziente è identificato e
+autenticato
+– scenario di fallimento:
+	-se il log-in fallisce il sistema invita il paziente a registrarsi sul portale della clinica,
+	in questo caso viene indirizzato ad una pagina con un form per prendere i dati personali, e il sistema registra
+	il paziente.
+	-il paziente viene indirizzato di nuovo nella home e riprova il login
+	
+	
+Caso d'uso UC4: inserimento tipologia di
+esame
+– Attore primario: amministrazione
+– Scenario principale:
+• L'amministratore effettua il login
+• L'amministratore clicca su 'crea nuova tipologia di esame' 
+• L'amministratore inserisce i dati della nuova tipologia di esame attravesro un fomr 
+• Il sistema registra la tipologia di esame
+• I punti precedenti vengono ripetuti fino a che necessario
+– Precondizioni: l'amministratore è identificato
+e autenticato
+– Scenario di fallimento:
+ -se l'amministratore fallisce il login viene invatato a riprovare
+ -se fallisce ancora telefona al tecnico
+ 
+ 
+ Caso d'uso UC5: esami effettuati da un medico
+– Attore primario: amministrazione
+– Scenario principale:
+• L’amministratore effettua il login
+• L’amministratore clicca su 'esami effettuati da un medico' 
+• Il sistema mostra l'elenco dei medici
+• L’amministratore clicca su un medico 
+• Il sistema mostra l'elenco degli esami sostenuti da quel medico
+– Precondizioni: l’amministratore è
+identificato e autenticato
+– Scenario di fallimento:
+ -se l'amministratore fallisce il login viene invatato a riprovare
+ -se fallisce ancora telefona al tecnico
+ 
+Caso d'uso UC6: inserimento risultati esame
+– Attore primario: amministrazione
+– Scenario principale:
+• L’amministratore effettua il login
+• L’amministratore clicca su 'inserisci risultati esame' 
+• L'amministrazione inserisce un codice esame
+• Il sistema presenta all'amministratore l'esame corrispondente al codice immesso
+• L'amministratore inserisce tutti i risultati dell'esame attraverso un form
+– Precondizioni:
+• l'amministratore è identificato e autenticato
+– Scenario di fallimento:
+ -se l'amministratore fallisce il login viene invatato a riprovare
+ -se fallisce ancora telefona al tecnico
+	
