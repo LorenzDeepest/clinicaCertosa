@@ -18,7 +18,10 @@ Caso d'uso UC2: crea esame
 • L'amministrazione associa un paziente all'esame creato
 • Il sistema registra l'esame (impostando automaticamente la data di prenotazione)
 – Precondizioni: l'amministratore è identificato e autenticato
-
+– Scenario di fallimento:
+ -se l'amministratore fallisce il login viene invatato a riprovare
+ -se fallisce ancora telefona al tecnico
+ 
 Caso d'uso UC3: consulta risultati proprio
 esame
 – Attore primario: paziente
