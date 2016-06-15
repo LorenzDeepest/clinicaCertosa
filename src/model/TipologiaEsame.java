@@ -3,7 +3,6 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,11 +34,11 @@ public class TipologiaEsame {
 	@Column(nullable = false)
 	private float costo;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.EAGER)
 	
 	private List<Prerequisito> prerequisiti;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Indicatore> indicatori;
 
 	

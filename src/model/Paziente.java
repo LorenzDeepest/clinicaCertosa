@@ -27,8 +27,10 @@ import javax.persistence.TemporalType;
 public class Paziente{
 
 
-
+	@Column(nullable = false)
 	private String nome;
+	
+	@Column(nullable = false)
 	private String cognome;
 	
 	@Id
@@ -47,7 +49,7 @@ public class Paziente{
 	@Temporal(TemporalType.DATE)
 	private Date dataDiNascita;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL})
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
 	@JoinColumn(name = "paziente_id")
 	private List<Esame> esami;
 	

@@ -62,7 +62,12 @@ public class EsameDao implements Dao<Esame> {
 		return null;
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	public List<Esame> findByIdMedico(long id){
+		Query query = em.createNamedQuery("Esame.findByIdMedico");
+		query.setParameter("medico_id", id);
+		return  new ArrayList<>(query.getResultList());
+	}
 	
 
 

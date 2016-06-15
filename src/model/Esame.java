@@ -13,13 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
 @Entity(name="esame")
-//@NamedQuery(name = "Esame.findByPaziente", query = "select distinct c from esame c where c.paziente_id = :id")
 public class Esame {
 
 	@Id
@@ -29,6 +29,7 @@ public class Esame {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataPrenotazione;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date dataEsame;
@@ -36,7 +37,7 @@ public class Esame {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private Medico medico;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToOne(fetch = FetchType.EAGER)
 	private TipologiaEsame tipologiaEsame;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })

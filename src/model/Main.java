@@ -27,9 +27,9 @@ public class Main {
 //		Medico medicoCorrente = new Helper().getMedicoCorrente(mail, entityManager);
 		
 //		System.out.println(medicoCorrente.toString());
-		Paziente paziente = new PazienteDao(entityManager).findByMail("ugo@gmail.com");
-		Medico medico=null;
-		System.out.println(paziente);
+		Paziente paziente = new PazienteDao(entityManager).findById(10);
+		Medico medico=new MedicoDao(entityManager).findById(1);
+		System.out.println(medico.getEsamiEffettuati());
 	}
 
 }

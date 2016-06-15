@@ -45,6 +45,7 @@ public class ControllerEsamiSostenutiMedico extends HttpServlet {
 		facade.close();
 		request.getSession().setAttribute("esami", esami);		
 		nextPage = response.encodeURL(nextPage);
+		
 		ServletContext servletContext = getServletContext();
 		RequestDispatcher rd = servletContext.getRequestDispatcher(nextPage);
 		rd.forward(request, response);

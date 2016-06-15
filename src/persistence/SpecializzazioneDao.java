@@ -1,9 +1,11 @@
 package persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import model.Specializzazione;
 
@@ -49,6 +51,12 @@ public class SpecializzazioneDao implements Dao<Specializzazione> {
 	public List<Specializzazione> findAll() {
 		List<Specializzazione> result = em.createNamedQuery("Specializzazione.findAll").getResultList();
 		return result;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Specializzazione> findByIdMedico(long id){
+		Query query = em.createNamedQuery("Specializzazione.findByIdMedico");
+		query.setParameter("medico_id", id);
+		return  new ArrayList<>(query.getResultList());
 	}
 
 	public void closeEmf() {

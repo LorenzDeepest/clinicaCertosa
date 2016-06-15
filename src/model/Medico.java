@@ -3,7 +3,6 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,10 +48,10 @@ public class Medico {
 	@Temporal(TemporalType.DATE)
 	private Date dataDiNascita;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Specializzazione> specializzazioni;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "medico_id")
 	private List<Esame> esamiEffettuati;
 
